@@ -5,8 +5,8 @@ RUN apt-get update && apt-get -y install musl-tools
 RUN rustup target add x86_64-unknown-linux-musl
 
 #Create a new empty project
-RUN USER=root cargo new --bin tam
-WORKDIR /usr/src/tam
+RUN USER=root cargo new --bin gt
+WORKDIR /usr/src/gt
 
 #Compile the dependencies
 COPY Cargo.toml ./
@@ -22,7 +22,7 @@ RUN strip ./target/x86_64-unknown-linux-musl/debug/glob_testing
 
 #Create the final image
 FROM scratch
-COPY  --from=builder ./usr/src/tam/target/x86_64-unknown-linux-musl/debug/glob_testing glob_testing
+COPY  --from=builder ./usr/src/gt/target/x86_64-unknown-linux-musl/debug/glob_testing glob_testing
 COPY ./templates /templates
 USER 1000
 EXPOSE 8000
